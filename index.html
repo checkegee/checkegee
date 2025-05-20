@@ -1,3 +1,5 @@
+merged_html_path = Path("/mnt/data/ege_full_page.html")
+
 merged_html_content = """<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -209,3 +211,7 @@ merged_html_content = """<!DOCTYPE html>
   </script>
 </body>
 </html>
+"""
+# Сохраняем файл
+merged_html_path.write_text(merged_html_content, encoding="utf-8")
+merged_html_path
