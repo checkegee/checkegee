@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Официальный портал проверки результатов ЕГЭ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .header {
+            background-color: #1a5cce;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .auth-form {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #1a5cce;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #1548a5;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .results-table th, .results-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .results-table th {
+            background-color: #f2f2f2;
+        }
+        .failed {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        .gosuslugi-btn {
+            background-color: #ffcc00;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .gosuslugi-btn:hover {
+            background-color: #e6b800;
+        }
+        .logo {
+            height: 20px;
+        }
+        .appeal-btn {
+            background-color: #e74c3c;
+            margin-top: 10px;
+        }
+        .appeal-btn:hover {
+            background-color: #c0392b;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #1a5cce;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Официальный портал проверки результатов ЕГЭ</h1>
+    </div>
+
+    <div class="container">
+        <div class="auth-form">
+            <h2>Авторизация через Госуслуги</h2>
+            <form id="authForm">
+                <label for="fio">ФИО:</label>
+                <input type="text" id="fio" name="fio" value="Антонов Максим Константинович" readonly>
+
+                <label for="birthdate">Дата рождения:</label>
+                <input type="text" id="birthdate" name="birthdate" value="04.06.2007" readonly>
+
+                <label for="region">Регион:</label>
+                <input type="text" id="region" name="region" value="Московская область, г. Сергиев Посад" readonly>
+
+                <label for="passport">Серия и номер паспорта:</label> 
+<input type="text" id="passport" name="passport" placeholder="Введите серию и номер паспорта" required>
+
+                <button type="submit" class="gosuslugi-btn">
+                    <img src="https://www.gosuslugi.ru/static/portal/svg/logo-ru.svg" alt="Госуслуги" class="logo">
+                    Войти через Госуслуги
+                </button>
+            </form>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Проверяем данные...</p>
+        </div>
+
+        <div id="results" style="display: none;">
+            <h2>Результаты ЕГЭ 2024</h2>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Предмет</th>
+                        <th>Дата экзамена</th>
+                        <th>Первичный балл</th>
+                        <th>Тестовый балл</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Математика (профиль)</td>
+                        <td>30.05.2024</td>
+                        <td class="failed">12</td>
+                        <td class="failed">27</td>
+                        <td class="failed">Не сдал</td>
+                    </tr>
+                    <tr>
+                        <td>Обществознание</td>
+                        <td>02.06.2024</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Обработка</td>
+                    </tr>
+                    <tr>
+                        <td>Русский язык</td>
+                        <td>06.06.2024</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Ожидается</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer">
+                <p>Внимание! Для подачи апелляции необходимо обратиться в конфликтную комиссию вашего региона в течение 2 рабочих дней после объявления результатов.</p>
+                <button class="appeal-btn">Подать апелляцию</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Показать загрузку
+            document.getElementById('loading').style.display = 'block';
+            
+            // Имитация проверки данных
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+                
+                // Прокрутка к результатам
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+                
+                // Добавляем эффект "шока" - красное мерцание
+                setTimeout(function() {
+                    document.body.style.backgroundColor = '#ffeeee';
+                    setTimeout(function() {
+                        document.body.style.backgroundColor = '#f5f5f5';
+                    }, 300);
+                }, 500);
+            }, 2500);
+        });
+
+        // Добавляем обработчик для кнопки апелляции
+        document.querySelector('.appeal-btn').addEventListener('click', function() {
+            alert('Апелляция не может быть подана, так как результаты по дан
