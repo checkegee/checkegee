@@ -1,0 +1,218 @@
+merged_html_path = Path("/mnt/data/ege_full_page.html")
+
+merged_html_content = """<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сервис ознакомления с результатами ЕГЭ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border: 1px solid #ccc;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo img {
+      height: 40px;
+    }
+    .header-text {
+      font-size: 16px;
+      color: #444;
+    }
+    h2, h1 {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+    }
+    .checkbox {
+      margin-top: 15px;
+    }
+    .warning {
+      margin-top: 15px;
+      font-size: 13px;
+      color: red;
+    }
+    .captcha {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .captcha-box {
+      background: #e0e0e0;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border: 1px solid #999;
+    }
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 10px;
+      background-color: #005bbb;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    .fail {
+      color: red;
+      font-weight: bold;
+    }
+    .info-block p {
+      margin: 6px 0;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://ege.edu.ru/images/logo.svg" alt="ЕГЭ">
+      <div>
+        <div class="header-text">Официальный информационный портал</div>
+        <strong>ЕДИНОГО ГОСУДАРСТВЕННОГО ЭКЗАМЕНА</strong>
+      </div>
+    </div>
+
+    <h2>СЕРВИС ОЗНАКОМЛЕНИЯ С РЕЗУЛЬТАТАМИ ЕГЭ</h2>
+
+    <label>Фамилия</label>
+    <input type="text">
+
+    <label>Имя</label>
+    <input type="text">
+
+    <label>Отчество</label>
+    <input type="text">
+
+    <label>Номер документа (без серии)</label>
+    <input type="text">
+
+    <label>Регион</label>
+    <input type="text">
+
+    <div class="checkbox">
+      <input type="checkbox" checked> Я согласен на обработку персональных данных
+    </div>
+
+    <div class="warning">
+      Внимание: Решение о публикации результатов на официальном портале ЕГЭ принимается ОИВ субъекта РФ...
+    </div>
+
+    <label>Введите код с картинки</label>
+    <div class="captcha">
+      <div class="captcha-box" id="captchaCode">431758</div>
+      <button type="button" onclick="generateCaptcha()" style="width:auto; background:#aaa;">ПЕРЕГЕНЕРИРОВАТЬ</button>
+    </div>
+    <input type="text" placeholder="Введите код здесь" id="codeInput">
+
+    <button onclick="showResults()">ВОЙТИ</button>
+
+    <div id="resultsSection" style="display:none;">
+      <h1>Результаты ЕГЭ – 2025</h1>
+      <div class="info-block">
+        <p><strong>ФИО:</strong> Антонов Максим Константинович</p>
+        <p><strong>Дата рождения:</strong> 04.06.2007</p>
+        <p><strong>Регион сдачи:</strong> Московская область, г. Сергиев Посад</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Предмет</th>
+            <th>Дата экзамена</th>
+            <th>Баллы</th>
+            <th>Результат</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Математика (профиль)</td>
+            <td>27 мая 2025</td<td class="fail">18</td>
+            <td class="fail">Неудовлетворительно</td>
+          </tr>
+          <tr>
+            <td>Русский язык</td>
+            <td>30 мая 2025</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Обществознание</td>
+            <td>2 июня 2025</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <button onclick="alert('Заявка на апелляцию принята. Ожидайте рассмотрения.');" style="background-color:#d9534f;">Подать апелляцию</button>
+    </div>
+
+    <div class="footer">© 2001–2025 Федеральная служба по надзору в сфере образования и науки</div>
+  </div>
+
+  <script>
+    function generateCaptcha() {
+      const code = Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('captchaCode').textContent = code;
+    }
+
+    function showResults() {
+      const entered = document.getElementById('codeInput').value;
+      const actual = document.getElementById('captchaCode').textContent;
+      if (entered === actual) {
+        document.getElementById('resultsSection').style.display = 'block';
+      } else {
+        alert('Неверный код. Попробуйте снова или перегенерируйте картинку.');
+      }
+    }
+  </script>
+</body>
+</html>
+"""
+
+# Сохраняем файл
+merged_html_path.write_text(merged_html_content, encoding="utf-8")
+merged_html_path
